@@ -1,5 +1,5 @@
+import Header from "@/components/Header";
 import type { Metadata } from "next";
-import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Home Page",
@@ -9,7 +9,9 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <div>
-      <h1>Main page</h1>
+      <Header name={"Serhii"} age={30} isMan={true}>
+        <p>A message from Home</p>
+      </Header>
     </div>
   );
 }
