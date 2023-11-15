@@ -5,10 +5,23 @@ import Image from "next/image";
 import img from "../../public/img.jpg";
 // import { useState } from "react";
 export const metadata: Metadata = {
-  title: "Home Page",
-  description: "",
+  title: "Main title",
+  description: "Main description of my app",
+  openGraph: {
+    title: "Main title",
+    description: "Main description of my app",
+    url: "mywebsite.com",
+    siteName: "Codewithserhii",
+    images: [
+      {
+        url: "/mywebsite.png",
+        width: 1260,
+        height: 800,
+      },
+    ],
+    locale: "en-EN",
+  },
 };
-
 export default function Home() {
   // const [loading, setLoading] = useState(false);
   // const fetchDataFromApi = async () => {
