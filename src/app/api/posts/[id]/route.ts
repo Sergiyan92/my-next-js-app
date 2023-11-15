@@ -5,12 +5,13 @@ const posts: any = [
     id: 12,
     title: "Hello Serhii",
     description: "Description of project",
+    img_url: "url_to_image",
   },
 ];
 
-export const GET = async (request: Request, context: any) => {
+export async function GET(request: Request, context: any) {
   const { params } = context;
   return NextResponse.json({
-    post: posts.find((x: any) => x.id === params.postId),
+    post: posts.find((x: any) => x.id.toString() === params.id),
   });
-};
+}

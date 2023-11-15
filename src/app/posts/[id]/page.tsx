@@ -1,35 +1,72 @@
-import React from "react";
-const fetchPost = async (postId: string) => {
-  const post = await fetch(`/api/posts/${postId}`, {
-    method: "GET",
-  });
-  return post.json();
+"use client";
+
+import { useEffect, useState } from "react";
+type Post = {
+  title?: string;
+  description?: string;
 };
 
-export const generateMetadata = async ({ params }: any) => {
-  const { post } = await fetchPost(params.id);
-  return {
-    title: post[0].title,
-    description: post[0].description,
-    openGraph: {
-      title: "Main title",
-      description: "Main description of my app",
-      url: `/posts/${params.id}`,
-      siteName: "Codewithserhii",
-      images: [
+export default async function PostId({ params }: any) {
+  const [post, setPost] = useState<Post | null>(null);
+
+  const getPostById = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/posts/${params.id}`,
         {
-          url: post.img_url,
-          width: 1260,
-          height: 800,
-        },
-      ],
-      locale: "en-EN",
-    },
+          method: "GET",
+        }
+      );
+      if (response) {
+        const { post } = await response.json();
+        if (post) setPost(post);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
-};
+  useEffect(() => {
+    getPostById();
+  }, []);
+  return (
+    <div>
+      {post && <h2>{post.title}</h2>}
+      {post && <p>{post.description}</p>}
+    </div>
+  );
+}
 
-const PostId = ({ params }: any) => {
-  return <div>PostId{params.id}</div>;
-};
+// const fetchPost = async (postId: string) => {
+//   try {
+//     const post = await fetch(`http://localhost:3000/api/posts/${postId}`, {
+//       method: "GET",
+//     });
+//     return post.json();
+//   } catch (error) {
+//     console.error("Error fetching post:", error);
+//     throw error; // Rethrow the error
+//   }
+// };
 
-export default PostId;
+// export const generateMetadata = async ({ params }: any) => {
+//   console.log("postId:", params.id); // Add this line to check the value
+//   const { post } = await fetchPost(params.id);
+//   return {
+//     title: post?.title,
+//     description: post?.description,
+//     openGraph: {
+//       title: "Main title",
+//       description: "Main description of my app",
+//       url: `/posts/${params.id}`,
+//       siteName: "Codewithserhii",
+//       images: [
+//         {
+//           url: post?.img_url,
+//           width: 1260,
+//           height: 800,
+//         },
+//       ],
+//       locale: "en-EN",
+//     },
+//   };
+// };
