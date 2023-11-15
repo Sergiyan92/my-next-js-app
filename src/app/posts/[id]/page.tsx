@@ -20,7 +20,6 @@ export default function PostId({ params }: any) {
         // Fetch data from the server
         const response = await fetch(`/api/posts/${params.id}`);
         const data = await response.json();
-
         // Set the fetched data to the state
         setPost(data.post);
       } catch (error) {
