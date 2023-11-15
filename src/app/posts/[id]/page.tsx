@@ -1,33 +1,37 @@
 "use client";
 
-import { useEffect, useState } from "react";
+// Import required modules
+import { useState, useEffect } from "react";
+
+// Define the Post type
 type Post = {
   title?: string;
   description?: string;
 };
 
-export default async function PostId({ params }: any) {
+// Component
+export default function PostId({ params }: any) {
   const [post, setPost] = useState<Post | null>(null);
 
-  const getPostById = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:3000/api/posts/${params.id}`,
-        {
-          method: "GET",
-        }
-      );
-      if (response) {
-        const { post } = await response.json();
-        if (post) setPost(post);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // useEffect to fetch data when the component mounts
   useEffect(() => {
+    const getPostById = async () => {
+      try {
+        // Fetch data from the server
+        const response = await fetch(`/api/posts/${params.id}`);
+        const data = await response.json();
+
+        // Set the fetched data to the state
+        setPost(data.post);
+      } catch (error) {
+        console.error("Error fetching post:", error);
+      }
+    };
+
+    // Call the function
     getPostById();
-  }, []);
+  }, [params.id]); // Re-run the effect if params.id changes
+
   return (
     <div>
       {post && <h2>{post.title}</h2>}
