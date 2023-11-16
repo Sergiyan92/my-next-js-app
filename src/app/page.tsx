@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import type { Metadata } from "next";
 import Image from "next/image";
 import img from "../../public/img.jpg";
+import { useAppContext } from "@/context";
 // import { useState } from "react";
 // export const metadata: Metadata = {
 //   title: "Main title",
@@ -24,6 +25,7 @@ import img from "../../public/img.jpg";
 //   },
 // };
 export default function Home() {
+  const { name, setName } = useAppContext();
   // const [loading, setLoading] = useState(false);
   // const fetchDataFromApi = async () => {
   //   try {
@@ -45,7 +47,9 @@ export default function Home() {
   //   }
   // };
   return (
-    <div className="m-4">
+    <div className=" flex gap-2 m-4">
+      <span>{name}</span>
+      <button onClick={() => setName("Anton")}>Change name</button>
       {/* <button
         className="px-4 py-2 font-bold text-white bg-blue-500"
         onClick={() => fetchDataFromApi()}
@@ -61,12 +65,12 @@ export default function Home() {
       </Header>
       <h1>Hello kitti</h1>
       <h2>Congrats World</h2> */}
-      <button
+      {/* <button
         onClick={() => toast.error("My first toast")}
         className="px-5 py-3 text-white bg-yellow-500 rounded"
       >
         Notify me!
-      </button>
+      </button> */}
     </div>
   );
 }

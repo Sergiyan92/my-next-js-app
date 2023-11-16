@@ -1,15 +1,21 @@
+"use client";
 import { createContext, useState, useContext } from "react";
 
-const AppContext = createContext({
-  hello: "world",
-});
+const AppContext = createContext<any>(undefined);
 
 export function AppWrapper({ children }: { children: React.ReactNode }) {
-  let [state, setState] = useState({
-    hello: "world",
-  });
+  let [name, setName] = useState("Serhii");
 
-  return <AppContext.Provider value={state}>{children}</AppContext.Provider>;
+  return (
+    <AppContext.Provider
+      value={{
+        name,
+        setName,
+      }}
+    >
+      {children}
+    </AppContext.Provider>
+  );
 }
 
 export function useAppContext() {
