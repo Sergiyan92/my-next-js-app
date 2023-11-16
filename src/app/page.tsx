@@ -1,9 +1,10 @@
 "use client";
 import { toast } from "sonner";
-import Header from "@/components/Header";
-import type { Metadata } from "next";
-import Image from "next/image";
-import img from "../../public/img.jpg";
+import { userStore } from "@/store/user";
+// import Header from "@/components/Header";
+// import type { Metadata } from "next";
+// import Image from "next/image";
+// import img from "../../public/img.jpg";
 import { useAppContext } from "@/context";
 // import { useState } from "react";
 // export const metadata: Metadata = {
@@ -25,7 +26,11 @@ import { useAppContext } from "@/context";
 //   },
 // };
 export default function Home() {
-  const { name, setName } = useAppContext();
+  const user = userStore((state: any) => state.user);
+  const updateUser = userStore((state: any) => state.updateUser);
+  const sub = userStore.subscribe(console.log);
+  sub();
+  // const { name, setName } = useAppContext();
   // const [loading, setLoading] = useState(false);
   // const fetchDataFromApi = async () => {
   //   try {
@@ -48,8 +53,18 @@ export default function Home() {
   // };
   return (
     <div className=" flex gap-2 m-4">
-      <span>{name}</span>
-      <button onClick={() => setName("Anton")}>Change name</button>
+      <p>{user.full_name}</p>
+      <input
+        className="border"
+        type="text"
+        onChange={(e: any) => {
+          updateUser({
+            full_name: e.target.value,
+          });
+        }}
+      />
+      {/* <span>{name}</span>
+      <button onClick={() => setName("Anton")}>Change name</button> */}
       {/* <button
         className="px-4 py-2 font-bold text-white bg-blue-500"
         onClick={() => fetchDataFromApi()}
